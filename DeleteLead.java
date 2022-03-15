@@ -53,26 +53,18 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 			
 			
 			driver.findElement(By.xpath("//button[text()='Find Leads']")).click();
-			WebElement firstLead =driver.findElement(By.xpath("(//div[text()='Lead ID']//following::a[@class='linktext'])[1]"));
-			  String firstLeadId= firstLead.getText();
+			
 			boolean staleElement = true; 
 
 			while(staleElement){
 
 			  try{
 
-				  driver.findElement(By.xpath("(//div[text()='Lead ID']//following::a[@class='linktext'])[1]")).click();
+				  WebElement firstLead =driver.findElement(By.xpath("(//div[text()='Lead ID']//following::a[@class='linktext'])[1]"));
+				  String firstLeadId= firstLead.getText();
+				  firstLead.click();
 				  
 			     staleElement = false;
-
-
-			  } catch(StaleElementReferenceException e){
-
-			    staleElement = true;
-
-			  }
-
-			}
 			/*FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 			.withTimeout(Duration.ofSeconds(5))
 			.pollingEvery(Duration.ofSeconds(2))
@@ -113,11 +105,16 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 			
 			
 			
-			driver.close();
+			
+			} catch(StaleElementReferenceException e){
 
+			    staleElement = true;
+
+			  }
 
 		}
-		
+			driver.close();
+			}
 	}
 
 	
